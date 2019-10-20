@@ -10,4 +10,12 @@ public class Grupo extends SuperGrupo {
 
     @Column(name = "DS_NOME", nullable = false, length = 20)
     private String nome;
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 }
