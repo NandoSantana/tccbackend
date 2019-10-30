@@ -1,4 +1,4 @@
-package br.com.tcc.api.regras;
+package br.com.tcc.api.componentes;
 
 import br.com.tcc.api.excecoes.GrupoException;
 import br.com.tcc.api.model.Grupo;

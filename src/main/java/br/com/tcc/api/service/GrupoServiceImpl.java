@@ -1,14 +1,15 @@
 package br.com.tcc.api.service;
 
+import br.com.tcc.api.componentes.ConverterGrupo;
+import br.com.tcc.api.dto.GrupoDTO;
 import br.com.tcc.api.excecoes.GrupoException;
 import br.com.tcc.api.model.Grupo;
-import br.com.tcc.api.model.Usuario;
-import br.com.tcc.api.regras.GrupoRegra;
-import br.com.tcc.api.regras.UsuarioRegra;
+import br.com.tcc.api.componentes.GrupoRegra;
 import br.com.tcc.api.repository.GrupoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,29 +20,37 @@ public class GrupoServiceImpl implements GrupoService {
     private GrupoRepository repository;
     @Autowired
     private GrupoRegra regra;
+    @Autowired
+    private ConverterGrupo converter;
 
-    public List<Grupo> buscarTodos() {
-        return repository.findAll();
+    public List<GrupoDTO> buscarTodos() {
+        List<GrupoDTO> grupoDTOS = new ArrayList<>();
+        List<Grupo> grupos = repository.findAll();
+        for (Grupo grupo: grupos){
+            grupoDTOS.add(converter.converteEntidadeDTO(grupo));
+        }
+        return grupoDTOS;
     }
 
-    public Grupo inserir(Grupo grupo) throws GrupoException {
-        return salvar(grupo);
+    public GrupoDTO inserir(GrupoDTO dto) throws GrupoException {
+        return converter.converteEntidadeDTO(salvar(dto));
     }
 
-    public Grupo alterar(Grupo grupo) throws GrupoException {
-        return salvar(grupo);
+    public GrupoDTO alterar(GrupoDTO dto) throws GrupoException {
+        return converter.converteEntidadeDTO(salvar(dto));
     }
 
-    public void deletar(Grupo grupo) {
-        repository.delete(grupo);
+    public void deletar(GrupoDTO dto)  {
+        repository.delete(converter.converteDTOEntidade(dto));
     }
 
-    public Grupo buscarPeloId(Long id) {
+    public GrupoDTO buscarPeloId(Long id) {
         Optional<Grupo> byId = repository.findById(id);
-        return byId.get();
+        return converter.converteEntidadeDTO(byId.get());
     }
 
-    private Grupo salvar(Grupo grupo) throws GrupoException {
+    private Grupo salvar(GrupoDTO dto) throws GrupoException {
+        Grupo grupo = converter.converteDTOEntidade(dto);
         regra.validarSalvar(grupo);
         return repository.save(grupo);
     }

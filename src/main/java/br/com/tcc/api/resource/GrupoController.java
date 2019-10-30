@@ -1,5 +1,6 @@
 package br.com.tcc.api.resource;
 
+import br.com.tcc.api.dto.GrupoDTO;
 import br.com.tcc.api.excecoes.GrupoException;
 import br.com.tcc.api.model.Grupo;
 import br.com.tcc.api.service.GrupoService;
@@ -8,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.OK;
@@ -43,8 +43,8 @@ public class GrupoController {
     @DeleteMapping(value = "/deletar/{id}")
     public ResponseEntity<?> deletar(@PathVariable Long id) {
         try {
-            Grupo grupo = service.buscarPeloId(id);
-            service.deletar(service.buscarPeloId(id));
+            GrupoDTO grupo = service.buscarPeloId(id);
+            service.deletar(grupo);
             return ResponseEntity.status(OK).body(grupo);
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,7 +53,7 @@ public class GrupoController {
     }
 
     @PostMapping(value = "/inserir")
-    public ResponseEntity<?> inserir(@Valid @RequestBody Grupo grupo) {
+    public ResponseEntity<?> inserir(@Valid @RequestBody GrupoDTO grupo) {
         try {
             grupo = service.inserir(grupo);
             return ResponseEntity.status(OK).body(grupo);
@@ -64,7 +64,7 @@ public class GrupoController {
     }
 
     @PutMapping(value = "/alterar")
-    public ResponseEntity<?> alterar(@Valid @RequestBody Grupo grupo) {
+    public ResponseEntity<?> alterar(@Valid @RequestBody GrupoDTO grupo) {
         try {
             grupo = service.alterar(grupo);
             return ResponseEntity.status(OK).body(grupo);
