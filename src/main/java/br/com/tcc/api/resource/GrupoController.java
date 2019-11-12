@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.util.List;
+
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.OK;
 
@@ -20,10 +22,11 @@ public class GrupoController {
     @Autowired
     private GrupoService service;
 
-    @GetMapping(value = "/listar")
-    public ResponseEntity<?> listar() {
+    @PostMapping(value = "/listar")
+    public ResponseEntity<?> listar(@Valid @RequestBody GrupoDTO grupo) {
         try {
-            return ResponseEntity.status(OK).body(service.buscarTodos());
+            List<GrupoDTO> resultado = service.buscarTodos(grupo);
+            return ResponseEntity.status(OK).body(resultado);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(BAD_REQUEST).body(e.getMessage());

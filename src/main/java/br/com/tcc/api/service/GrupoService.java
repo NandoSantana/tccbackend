@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface GrupoService {
 
-    List<GrupoDTO> buscarTodos();
+    List<GrupoDTO> buscarTodos(GrupoDTO grupo);
 
     GrupoDTO inserir (GrupoDTO dto) throws GrupoException;
 

@@ -23,11 +23,11 @@ public class GrupoServiceImpl implements GrupoService {
     @Autowired
     private ConverterGrupo converter;
 
-    public List<GrupoDTO> buscarTodos() {
+    public List<GrupoDTO> buscarTodos(GrupoDTO grupo) {
         List<GrupoDTO> grupoDTOS = new ArrayList<>();
         List<Grupo> grupos = repository.findAll();
-        for (Grupo grupo: grupos){
-            grupoDTOS.add(converter.converteEntidadeDTO(grupo));
+        for (Grupo grupoResultado: grupos){
+            grupoDTOS.add(converter.converteEntidadeDTO(grupoResultado));
         }
         return grupoDTOS;
     }
