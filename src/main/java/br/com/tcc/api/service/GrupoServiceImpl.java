@@ -84,8 +84,17 @@ public class GrupoServiceImpl extends ServicePrincipal implements GrupoService {
         return grupo;
     }
 
-    public void deletar(ListaGrupoDTO dto)  {
-        repository.delete(converter.converteDTOEntidade(dto));
+    public GrupoDTO deletar(ListaGrupoDTO dto)  {
+        GrupoDTO grupo = new GrupoDTO();
+        try {
+            repository.delete(converter.converteDTOEntidade(dto));
+            grupo.setTipoMensagem(mensagemDeletarOK());
+            grupo.setGrupoRetorno(dto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            grupo.setTipoMensagem(mensagemDeletarErro());
+        }
+        return grupo;
     }
 
     public ListaGrupoDTO buscarPeloId(Long id) {

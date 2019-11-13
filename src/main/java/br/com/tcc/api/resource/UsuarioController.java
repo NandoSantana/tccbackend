@@ -20,16 +20,14 @@ public class UsuarioController {
     private UsuarioService service;
 
     @PostMapping(value = "/listar")
-    public ResponseEntity<?> listar() {
-        try {
-            return ResponseEntity.status(OK).body(service.buscarTodos());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(BAD_REQUEST).body(e.getMessage());
-        }
+    public ResponseEntity<?> listar(@Valid @RequestBody ListaUsuarioDTO usuario) {
+        UsuarioDTO usuarioDdto = service.buscarTodos();
+        return ResponseEntity.status(
+                usuarioDdto.getTipoMensagem().getTipo().equals("error") ? BAD_REQUEST :
+                        OK).body(usuarioDdto);
     }
 
-    @GetMapping(value = "/alterar/{id}")
+    @GetMapping(value = "/buscarPeloId/{id}")
     public ResponseEntity<?> buscarPeloId(@PathVariable Long id) {
         try {
             return ResponseEntity.status(OK).body(service.buscarPeloId(id));
@@ -41,25 +39,26 @@ public class UsuarioController {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deletar(@PathVariable Long id) {
-        try {
-            ListaUsuarioDTO usuario = service.buscarPeloId(id);
-            service.deletar(usuario);
-            return ResponseEntity.status(OK).body(usuario);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(BAD_REQUEST).body(e.getMessage());
-        }
+        ListaUsuarioDTO usuario = service.buscarPeloId(id);
+        UsuarioDTO usuarioDto = service.deletar(usuario);
+        return ResponseEntity.status(
+                usuarioDto.getTipoMensagem().getTipo().equals("error") ? BAD_REQUEST :
+                        OK).body(usuarioDto);
     }
 
     @PostMapping(value = "/inserir")
     public ResponseEntity<?> inserir(@Valid @RequestBody ListaUsuarioDTO usuario) {
         UsuarioDTO usuarioDto = service.inserir(usuario);
-        return ResponseEntity.status(OK).body(usuarioDto);
+        return ResponseEntity.status(
+                usuarioDto.getTipoMensagem().getTipo().equals("error") ? BAD_REQUEST :
+                        OK).body(usuarioDto);
     }
 
     @PutMapping(value = "/alterar")
     public ResponseEntity<?> alterar(@Valid @RequestBody ListaUsuarioDTO usuario) {
         UsuarioDTO usuarioDto = service.alterar(usuario);
-        return ResponseEntity.status(OK).body(usuarioDto);
+        return ResponseEntity.status(
+                usuarioDto.getTipoMensagem().getTipo().equals("error") ? BAD_REQUEST :
+                        OK).body(usuarioDto);
     }
 }

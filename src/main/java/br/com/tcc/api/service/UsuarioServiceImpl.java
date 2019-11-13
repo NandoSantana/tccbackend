@@ -71,8 +71,17 @@ public class UsuarioServiceImpl extends ServicePrincipal implements UsuarioServi
         return dto;
     }
 
-    public void deletar(ListaUsuarioDTO dto){
-        repository.delete(converter.converteDTOEntidade(dto));
+    public UsuarioDTO deletar(ListaUsuarioDTO dtoDeletar){
+        UsuarioDTO dto = new UsuarioDTO();
+        try {
+            repository.delete(converter.converteDTOEntidade(dtoDeletar));
+            dto.setTipoMensagem(mensagemDeletarOK());
+            dto.setUsuarioRetorno(dtoDeletar);
+        } catch (Exception e) {
+            e.printStackTrace();
+            dto.setTipoMensagem(mensagemDeletarErro());
+        }
+        return dto;
     }
 
     public ListaUsuarioDTO buscarPeloId(Long id){

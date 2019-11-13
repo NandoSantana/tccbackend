@@ -13,7 +13,7 @@ public interface GrupoService {
 
     GrupoDTO alterar (ListaGrupoDTO dto) ;
 
-    void deletar(ListaGrupoDTO dto) throws Exception;
+    GrupoDTO deletar(ListaGrupoDTO dto);
 
     ListaGrupoDTO buscarPeloId(Long id);
 }

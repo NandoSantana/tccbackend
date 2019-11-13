@@ -25,4 +25,20 @@ class ServicePrincipal {
         mensagem.setTipo("success");
         return mensagem;
     }
+
+    MensagemDTO mensagemDeletarOK(){
+        MensagemDTO mensagem = new MensagemDTO();
+        mensagem.setMensagem("Registro excluído com sucesso !");
+        mensagem.setSumario("Sucesso");
+        mensagem.setTipo("success");
+        return mensagem;
+    }
+
+    MensagemDTO mensagemDeletarErro(){
+        MensagemDTO mensagem = new MensagemDTO();
+        mensagem.setMensagem("Registro não foi excluído, favor analisar com o setor de informática !");
+        mensagem.setSumario("Error");
+        mensagem.setTipo("error");
+        return mensagem;
+    }
 }

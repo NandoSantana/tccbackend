@@ -24,25 +24,21 @@ public class GrupoController {
 
     @PostMapping(value = "/listar")
     public ResponseEntity<?> listar(@Valid @RequestBody ListaGrupoDTO grupo) {
-        try {
-            return ResponseEntity.status(OK).body(service.buscarTodos());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(BAD_REQUEST).body(e.getMessage());
-        }
+        GrupoDTO grupoDto = service.buscarTodos();
+        return ResponseEntity.status(
+                grupoDto.getTipoMensagem().getTipo().equals("error") ? BAD_REQUEST :
+                        OK).body(grupoDto);
     }
 
     @PostMapping(value = "/listarPorNome")
     public ResponseEntity<?> listarPorNome(@Valid @RequestBody ListaGrupoDTO grupo) {
-        try {
-            return ResponseEntity.status(OK).body(service.buscarPorNome(grupo));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(BAD_REQUEST).body(e.getMessage());
-        }
+        GrupoDTO grupoDto = service.buscarPorNome(grupo);
+        return ResponseEntity.status(
+                grupoDto.getTipoMensagem().getTipo().equals("error") ? BAD_REQUEST :
+                        OK).body(grupoDto);
     }
 
-    @GetMapping(value = "/alterar/{id}")
+    @GetMapping(value = "/buscarPeloId/{id}")
     public ResponseEntity<?> alterar(@PathVariable Long id) {
         try {
             return ResponseEntity.status(OK).body(service.buscarPeloId(id));
@@ -54,25 +50,26 @@ public class GrupoController {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deletar(@PathVariable Long id) {
-        try {
-            ListaGrupoDTO grupo = service.buscarPeloId(id);
-            service.deletar(grupo);
-            return ResponseEntity.status(OK).body(grupo);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(BAD_REQUEST).body(e.getMessage());
-        }
+        ListaGrupoDTO grupo = service.buscarPeloId(id);
+        GrupoDTO deletar = service.deletar(grupo);
+        return ResponseEntity.status(
+                deletar.getTipoMensagem().getTipo().equals("error") ? BAD_REQUEST :
+                        OK).body(deletar);
     }
 
     @PostMapping(value = "/inserir")
     public ResponseEntity<?> inserir(@Valid @RequestBody ListaGrupoDTO grupo) {
         GrupoDTO grupoDto = service.inserir(grupo);
-        return ResponseEntity.status(OK).body(grupoDto);
+        return ResponseEntity.status(
+                grupoDto.getTipoMensagem().getTipo().equals("error") ? BAD_REQUEST :
+                        OK).body(grupoDto);
     }
 
     @PutMapping(value = "/alterar")
     public ResponseEntity<?> alterar(@Valid @RequestBody ListaGrupoDTO grupo) {
         GrupoDTO grupoDto = service.alterar(grupo);
-        return ResponseEntity.status(OK).body(grupoDto);
+        return ResponseEntity.status(
+                grupoDto.getTipoMensagem().getTipo().equals("error") ? BAD_REQUEST :
+                        OK).body(grupoDto);
     }
 }

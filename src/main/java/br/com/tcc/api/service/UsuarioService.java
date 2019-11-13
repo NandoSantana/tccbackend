@@ -11,7 +11,7 @@ public interface UsuarioService {
 
     UsuarioDTO alterar (ListaUsuarioDTO usuario) ;
 
-    void deletar(ListaUsuarioDTO usuario);
+    UsuarioDTO deletar(ListaUsuarioDTO usuario);
 
     ListaUsuarioDTO buscarPeloId(Long id);
 }
