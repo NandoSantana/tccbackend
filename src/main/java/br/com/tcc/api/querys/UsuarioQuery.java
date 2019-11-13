@@ -2,9 +2,9 @@ package br.com.tcc.api.querys;
 
 import br.com.tcc.api.model.Usuario;
 
+import java.util.List;
+
 public interface UsuarioQuery {
 
-    Boolean buscarUsuariosNomeDiferentesAlterando(Usuario usuario);
-
-    Boolean buscarUsuariosNomeSobreNomeDiferentesAlterando(Usuario usuario);
+    List<Usuario> buscarUsuariosNomeDiferentesAlterando(Usuario usuario);
 }

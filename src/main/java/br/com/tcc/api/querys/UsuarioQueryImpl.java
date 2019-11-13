@@ -5,6 +5,7 @@ import br.com.tcc.api.model.Usuario;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.List;
 
 public class UsuarioQueryImpl implements UsuarioQuery {
 
@@ -12,26 +13,13 @@ public class UsuarioQueryImpl implements UsuarioQuery {
     private EntityManager manager;
 
     @Override
-    public Boolean buscarUsuariosNomeDiferentesAlterando(Usuario usuario) {
-        String queryString = "SELECT u FROM " + Usuario.class.getName() + " u " +
-                "FROM u.nome = :nome " +
-                "AND u.id <> :id ";
+    public List<Usuario> buscarUsuariosNomeDiferentesAlterando(Usuario usuario) {
+        String queryString = "SELECT usu FROM " + Usuario.class.getName() + " usu " +
+                "WHERE usu.nome = :nome " +
+                "AND usu.id <> :id ";
         Query query = manager.createQuery(queryString);
         query.setParameter("nome", usuario.getNome());
         query.setParameter("id", usuario.getId());
-        return query.getResultList().isEmpty();
-    }
-
-    @Override
-    public Boolean buscarUsuariosNomeSobreNomeDiferentesAlterando(Usuario usuario) {
-        String queryString = "SELECT u FROM " + Usuario.class.getName() + " u " +
-                "FROM u.nome = :nome " +
-                "AND u.sobrenome = :sobrenome" +
-                "AND u.id <> :id ";
-        Query query = manager.createQuery(queryString);
-        query.setParameter("nome", usuario.getNome());
-        query.setParameter("id", usuario.getId());
-        query.setParameter("sobrenome", usuario.getSobrenome());
-        return query.getResultList().isEmpty();
+        return query.getResultList();
     }
 }

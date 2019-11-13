@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 import static br.com.tcc.api.utils.StringUtils.isNuloVazio;
 
@@ -57,11 +59,16 @@ public class UsuarioRegraImpl implements UsuarioRegra {
     }
 
     private void antesAlterar(Usuario usuario) throws UsuarioException {
-        if(repository.buscarUsuariosNomeDiferentesAlterando(usuario)){
+        List<Usuario> usuarios = repository.buscarUsuariosNomeDiferentesAlterando(usuario);
+        if(!usuarios.isEmpty()){
             throw new UsuarioException(NOME_EXISTENTE_EM_NOSSA_BASE_DE_DADOS);
+        } else {
+            Long contar = usuarios.stream().filter(f -> f.getSobrenome().equals(usuario.getSobrenome())).count();
+            if(contar.intValue() > 1){
+                throw new UsuarioException(NOME_E_SOBRENOME_EXISTENTE_EM_NOSSA_BASE_DE_DADOS);
+            }
         }
-        if(repository.buscarUsuariosNomeSobreNomeDiferentesAlterando(usuario)){
-            throw new UsuarioException(NOME_E_SOBRENOME_EXISTENTE_EM_NOSSA_BASE_DE_DADOS);
-        }
+        Optional<Usuario> altera = repository.findById(usuario.getId());
+        usuario.setDataCadastro(altera.get().getDataCadastro());
     }
 }

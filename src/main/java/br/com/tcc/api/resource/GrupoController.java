@@ -38,7 +38,7 @@ public class GrupoController {
                         OK).body(grupoDto);
     }
 
-    @GetMapping(value = "/buscarPeloId/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<?> alterar(@PathVariable Long id) {
         try {
             return ResponseEntity.status(OK).body(service.buscarPeloId(id));

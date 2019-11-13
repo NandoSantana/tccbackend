@@ -34,7 +34,9 @@ public class ConverterUsuarioImpl implements ConverterUsuario{
             usuario.setGrupo(converter.converteDTOEntidade(dto.getGrupo()));
             usuario.setNome(dto.getNome());
             usuario.setSobrenome(dto.getSobrenome());
-            usuario.setDataCadastro(formataData(dto.getDataCadastro()));
+            if(dto.getId() == null){
+                usuario.setDataCadastro(formataData(dto.getDataCadastro()));
+            }
             usuario.setId(dto.getId());
         } catch (Exception e) {
             e.printStackTrace();

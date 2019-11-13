@@ -27,7 +27,7 @@ public class UsuarioController {
                         OK).body(usuarioDdto);
     }
 
-    @GetMapping(value = "/buscarPeloId/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<?> buscarPeloId(@PathVariable Long id) {
         try {
             return ResponseEntity.status(OK).body(service.buscarPeloId(id));
