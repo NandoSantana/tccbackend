@@ -1,7 +1,7 @@
 package br.com.tcc.api.service;
 
 import br.com.tcc.api.componentes.ConverterUsuario;
-import br.com.tcc.api.dto.UsuarioDTO;
+import br.com.tcc.api.dto.ListaUsuarioDTO;
 import br.com.tcc.api.excecoes.UsuarioException;
 import br.com.tcc.api.model.Usuario;
 import br.com.tcc.api.componentes.UsuarioRegra;
@@ -23,8 +23,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Autowired
     private ConverterUsuario converter;
 
-    public List<UsuarioDTO> buscarTodos(){
-        List<UsuarioDTO> usuarioDTOS = new ArrayList<>();
+    public List<ListaUsuarioDTO> buscarTodos(){
+        List<ListaUsuarioDTO> usuarioDTOS = new ArrayList<>();
         List<Usuario> usuarios = repository.findAll();
         for(Usuario usuario: usuarios){
             usuarioDTOS.add(converter.converteEntidadeDTO(usuario));
@@ -32,24 +32,24 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioDTOS;
     }
 
-    public UsuarioDTO inserir (UsuarioDTO usuario) throws UsuarioException {
+    public ListaUsuarioDTO inserir (ListaUsuarioDTO usuario) throws UsuarioException {
         return converter.converteEntidadeDTO(salvar(usuario));
     }
 
-    public UsuarioDTO alterar (UsuarioDTO usuario) throws UsuarioException {
+    public ListaUsuarioDTO alterar (ListaUsuarioDTO usuario) throws UsuarioException {
         return converter.converteEntidadeDTO(salvar(usuario));
     }
 
-    public void deletar(UsuarioDTO dto){
+    public void deletar(ListaUsuarioDTO dto){
         repository.delete(converter.converteDTOEntidade(dto));
     }
 
-    public UsuarioDTO buscarPeloId(Long id){
+    public ListaUsuarioDTO buscarPeloId(Long id){
         Optional<Usuario> byId = repository.findById(id);
         return converter.converteEntidadeDTO(byId.get());
     }
 
-    private Usuario salvar(UsuarioDTO dto) throws UsuarioException {
+    private Usuario salvar(ListaUsuarioDTO dto) throws UsuarioException {
         Usuario usuario = converter.converteDTOEntidade(dto);
         regra.validarSalvar(usuario);
         return repository.save(usuario);

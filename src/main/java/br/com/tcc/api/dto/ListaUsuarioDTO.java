@@ -1,13 +1,13 @@
 package br.com.tcc.api.dto;
 
-public class UsuarioDTO extends SuperGrupoDTO {
+public class ListaUsuarioDTO extends SuperGrupoDTO {
 
-    private GrupoDTO grupo;
+    private ListaGrupoDTO grupo;
     private String nome;
     private String sobrenome;
     private String dataAniversario;
 
-    public GrupoDTO getGrupo() {
+    public ListaGrupoDTO getGrupo() {
         return grupo;
     }
 
@@ -23,7 +23,7 @@ public class UsuarioDTO extends SuperGrupoDTO {
         return dataAniversario;
     }
 
-    public void setGrupo(GrupoDTO grupo) {
+    public void setGrupo(ListaGrupoDTO grupo) {
         this.grupo = grupo;
     }
 

@@ -2,6 +2,8 @@ package br.com.tcc.api.service;
 
 import br.com.tcc.api.componentes.ConverterGrupo;
 import br.com.tcc.api.dto.GrupoDTO;
+import br.com.tcc.api.dto.ListaGrupoDTO;
+import br.com.tcc.api.dto.MensagemDTO;
 import br.com.tcc.api.excecoes.GrupoException;
 import br.com.tcc.api.model.Grupo;
 import br.com.tcc.api.componentes.GrupoRegra;
@@ -14,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class GrupoServiceImpl implements GrupoService {
+public class GrupoServiceImpl extends ServicePrincipal implements GrupoService {
 
     @Autowired
     private GrupoRepository repository;
@@ -23,33 +25,62 @@ public class GrupoServiceImpl implements GrupoService {
     @Autowired
     private ConverterGrupo converter;
 
-    public List<GrupoDTO> buscarTodos(GrupoDTO grupo) {
-        List<GrupoDTO> grupoDTOS = new ArrayList<>();
+    public GrupoDTO buscarTodos(ListaGrupoDTO grupo) {
+        List<ListaGrupoDTO> grupoDTOS = new ArrayList<>();
         List<Grupo> grupos = repository.findAll();
         for (Grupo grupoResultado: grupos){
             grupoDTOS.add(converter.converteEntidadeDTO(grupoResultado));
         }
-        return grupoDTOS;
+        GrupoDTO dto = new GrupoDTO();
+        dto.setLista(grupoDTOS);
+        dto.setTipoMensagem(mensagemRetornoBusca(grupoDTOS.size() > 0));
+        return dto;
     }
 
-    public GrupoDTO inserir(GrupoDTO dto) throws GrupoException {
-        return converter.converteEntidadeDTO(salvar(dto));
+    public GrupoDTO inserir(ListaGrupoDTO dto)  {
+        GrupoDTO grupo = new GrupoDTO();
+        try {
+            dto = converter.converteEntidadeDTO(salvar(dto));
+            grupo.setTipoMensagem(mensagemSalvar());
+            grupo.setGrupoRetorno(dto);
+        } catch (GrupoException e) {
+            e.printStackTrace();
+            MensagemDTO mensagem = new MensagemDTO();
+            mensagem.setSumario("Error");
+            mensagem.setTipo("error");
+            mensagem.setMensagem(e.getMensagem());
+            grupo.setTipoMensagem(mensagem);
+        }
+        return grupo;
     }
 
-    public GrupoDTO alterar(GrupoDTO dto) throws GrupoException {
-        return converter.converteEntidadeDTO(salvar(dto));
+    public GrupoDTO alterar(ListaGrupoDTO dto)  {
+        GrupoDTO grupo = new GrupoDTO();
+        try {
+            dto = converter.converteEntidadeDTO(salvar(dto));
+            grupo.setTipoMensagem(mensagemSalvar());
+            grupo.setGrupoRetorno(dto);
+        } catch (GrupoException e) {
+            e.printStackTrace();
+            MensagemDTO mensagem = new MensagemDTO();
+            mensagem.setSumario("Error");
+            mensagem.setTipo("error");
+            mensagem.setMensagem(e.getMensagem());
+            grupo.setTipoMensagem(mensagem);
+        }
+        return grupo;
     }
 
-    public void deletar(GrupoDTO dto)  {
+    public void deletar(ListaGrupoDTO dto)  {
         repository.delete(converter.converteDTOEntidade(dto));
     }
 
-    public GrupoDTO buscarPeloId(Long id) {
+    public ListaGrupoDTO buscarPeloId(Long id) {
         Optional<Grupo> byId = repository.findById(id);
         return converter.converteEntidadeDTO(byId.get());
     }
 
-    private Grupo salvar(GrupoDTO dto) throws GrupoException {
+    private Grupo salvar(ListaGrupoDTO dto) throws GrupoException {
         Grupo grupo = converter.converteDTOEntidade(dto);
         regra.validarSalvar(grupo);
         return repository.save(grupo);

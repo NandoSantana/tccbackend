@@ -14,8 +14,8 @@ public class GrupoQueryImpl implements GrupoQuery {
     @Override
     public Boolean buscarGruposNomeDiferentesAlterando(Grupo grupo) {
         String queryString = "SELECT g FROM " + Grupo.class.getName() + " g " +
-                "FROM g.nome = :nome " +
-                "AND g.id <> :id ";
+                "WHERE g.nome = :nome " +
+                "AND g.id = :id ";
         Query query = manager.createQuery(queryString);
         query.setParameter("nome", grupo.getNome());
         query.setParameter("id", grupo.getId());

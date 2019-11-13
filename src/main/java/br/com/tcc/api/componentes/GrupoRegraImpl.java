@@ -6,10 +6,13 @@ import br.com.tcc.api.repository.GrupoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 @Component
 public class GrupoRegraImpl implements GrupoRegra {
 
     private static final String NOME_EXISTENTE_EM_NOSSA_BASE_DE_DADOS = "Nome do grupo existente em nossa base de dados !";
+    private static final String NOME_OBRIGATORIO = "Nome do grupo é obrigatório !";
 
     @Autowired
     private GrupoRepository repository;
@@ -18,24 +21,26 @@ public class GrupoRegraImpl implements GrupoRegra {
     public void validarSalvar(Grupo grupo) throws GrupoException {
         if(grupo.getNome() == null ||
                 grupo.getNome().length() == 0){
-            throw new GrupoException("Nome do grupo é obrigatório !");
+            throw new GrupoException(NOME_OBRIGATORIO);
         }
         if(grupo.getId() == null){
             antesInserir(grupo);
+            grupo.setDataCadastro(new Date());
         } else {
             antesAlterar(grupo);
         }
     }
 
     private void antesAlterar(Grupo grupo) throws GrupoException {
-        Grupo u = repository.findByNome(grupo.getNome());
-        if(u != null){
+        Boolean retorno = repository.buscarGruposNomeDiferentesAlterando(grupo);
+        if(!retorno){
             throw new GrupoException(NOME_EXISTENTE_EM_NOSSA_BASE_DE_DADOS);
         }
     }
 
     private void antesInserir(Grupo grupo) throws GrupoException {
-        if(repository.buscarGruposNomeDiferentesAlterando(grupo)){
+        Grupo grupoBuscar = repository.findByNome(grupo.getNome());
+        if(grupoBuscar != null){
             throw new GrupoException(NOME_EXISTENTE_EM_NOSSA_BASE_DE_DADOS);
         }
     }

@@ -1,11 +1,11 @@
 package br.com.tcc.api.componentes;
 
-import br.com.tcc.api.dto.UsuarioDTO;
+import br.com.tcc.api.dto.ListaUsuarioDTO;
 import br.com.tcc.api.model.Usuario;
 
 public interface ConverterUsuario {
 
-    UsuarioDTO converteEntidadeDTO(Usuario usuario);
+    ListaUsuarioDTO converteEntidadeDTO(Usuario usuario);
 
-    Usuario converteDTOEntidade(UsuarioDTO dto);
+    Usuario converteDTOEntidade(ListaUsuarioDTO dto);
 }

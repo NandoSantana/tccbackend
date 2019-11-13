@@ -1,14 +1,26 @@
 package br.com.tcc.api.dto;
 
-public class GrupoDTO extends SuperGrupoDTO {
+import java.util.List;
 
-    private String nome;
+public class GrupoDTO extends PrincipalDTO {
 
-    public String getNome() {
-        return nome;
+    private List<ListaGrupoDTO> lista;
+
+    private ListaGrupoDTO grupoRetorno;
+
+    public List<ListaGrupoDTO> getLista() {
+        return lista;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setLista(List<ListaGrupoDTO> lista) {
+        this.lista = lista;
+    }
+
+    public ListaGrupoDTO getGrupoRetorno() {
+        return grupoRetorno;
+    }
+
+    public void setGrupoRetorno(ListaGrupoDTO grupoRetorno) {
+        this.grupoRetorno = grupoRetorno;
     }
 }

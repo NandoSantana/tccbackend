@@ -1,8 +1,8 @@
 package br.com.tcc.api.resource;
 
 import br.com.tcc.api.dto.GrupoDTO;
+import br.com.tcc.api.dto.ListaGrupoDTO;
 import br.com.tcc.api.excecoes.GrupoException;
-import br.com.tcc.api.model.Grupo;
 import br.com.tcc.api.service.GrupoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +23,9 @@ public class GrupoController {
     private GrupoService service;
 
     @PostMapping(value = "/listar")
-    public ResponseEntity<?> listar(@Valid @RequestBody GrupoDTO grupo) {
+    public ResponseEntity<?> listar(@Valid @RequestBody ListaGrupoDTO grupo) {
         try {
-            List<GrupoDTO> resultado = service.buscarTodos(grupo);
+            GrupoDTO resultado = service.buscarTodos(grupo);
             return ResponseEntity.status(OK).body(resultado);
         } catch (Exception e) {
             e.printStackTrace();
@@ -33,8 +33,8 @@ public class GrupoController {
         }
     }
 
-    @GetMapping(value = "/buscarPeloId/{id}")
-    public ResponseEntity<?> buscarPeloId(@PathVariable Long id) {
+    @GetMapping(value = "/alterar/{id}")
+    public ResponseEntity<?> alterar(@PathVariable Long id) {
         try {
             return ResponseEntity.status(OK).body(service.buscarPeloId(id));
         } catch (Exception e) {
@@ -43,10 +43,10 @@ public class GrupoController {
         }
     }
 
-    @DeleteMapping(value = "/deletar/{id}")
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deletar(@PathVariable Long id) {
         try {
-            GrupoDTO grupo = service.buscarPeloId(id);
+            ListaGrupoDTO grupo = service.buscarPeloId(id);
             service.deletar(grupo);
             return ResponseEntity.status(OK).body(grupo);
         } catch (Exception e) {
@@ -55,25 +55,15 @@ public class GrupoController {
         }
     }
 
-    @PostMapping(value = "/inserir")
-    public ResponseEntity<?> inserir(@Valid @RequestBody GrupoDTO grupo) {
-        try {
-            grupo = service.inserir(grupo);
-            return ResponseEntity.status(OK).body(grupo);
-        } catch (GrupoException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(BAD_REQUEST).body(e.getMessage());
-        }
+    @PostMapping(value = "/salvar")
+    public ResponseEntity<?> inserir(@Valid @RequestBody ListaGrupoDTO grupo) {
+        GrupoDTO grupoDto = service.inserir(grupo);
+        return ResponseEntity.status(OK).body(grupoDto);
     }
 
     @PutMapping(value = "/alterar")
-    public ResponseEntity<?> alterar(@Valid @RequestBody GrupoDTO grupo) {
-        try {
-            grupo = service.alterar(grupo);
-            return ResponseEntity.status(OK).body(grupo);
-        } catch (GrupoException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(BAD_REQUEST).body(e.getMessage());
-        }
+    public ResponseEntity<?> alterar(@Valid @RequestBody ListaGrupoDTO grupo) {
+        GrupoDTO grupoDto = service.alterar(grupo);
+        return ResponseEntity.status(OK).body(grupoDto);
     }
 }

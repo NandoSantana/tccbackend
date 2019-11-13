@@ -1,19 +1,18 @@
 package br.com.tcc.api.service;
 
 import br.com.tcc.api.dto.GrupoDTO;
+import br.com.tcc.api.dto.ListaGrupoDTO;
 import br.com.tcc.api.excecoes.GrupoException;
-
-import java.util.List;
 
 public interface GrupoService {
 
-    List<GrupoDTO> buscarTodos(GrupoDTO grupo);
+    GrupoDTO buscarTodos(ListaGrupoDTO grupo);
 
-    GrupoDTO inserir (GrupoDTO dto) throws GrupoException;
+    GrupoDTO inserir (ListaGrupoDTO dto) ;
 
-    GrupoDTO alterar (GrupoDTO dto) throws GrupoException;
+    GrupoDTO alterar (ListaGrupoDTO dto) ;
 
-    void deletar(GrupoDTO dto) throws Exception;
+    void deletar(ListaGrupoDTO dto) throws Exception;
 
-    GrupoDTO buscarPeloId(Long id);
+    ListaGrupoDTO buscarPeloId(Long id);
 }

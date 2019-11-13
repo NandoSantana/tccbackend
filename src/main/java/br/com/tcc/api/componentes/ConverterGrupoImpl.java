@@ -1,6 +1,6 @@
 package br.com.tcc.api.componentes;
 
-import br.com.tcc.api.dto.GrupoDTO;
+import br.com.tcc.api.dto.ListaGrupoDTO;
 import br.com.tcc.api.model.Grupo;
 import org.springframework.stereotype.Component;
 
@@ -10,8 +10,8 @@ import static br.com.tcc.api.utils.DataUtils.formataData;
 public class ConverterGrupoImpl implements ConverterGrupo {
 
     @Override
-    public GrupoDTO converteEntidadeDTO(Grupo grupo) {
-        GrupoDTO dto = new GrupoDTO();
+    public ListaGrupoDTO converteEntidadeDTO(Grupo grupo) {
+        ListaGrupoDTO dto = new ListaGrupoDTO();
         dto.setNome(grupo.getNome());
         dto.setId(grupo.getId());
         dto.setDataCadastro(formataData(grupo.getDataCadastro()));
@@ -19,7 +19,7 @@ public class ConverterGrupoImpl implements ConverterGrupo {
     }
 
     @Override
-    public Grupo converteDTOEntidade(GrupoDTO dto)  {
+    public Grupo converteDTOEntidade(ListaGrupoDTO dto)  {
         Grupo grupo = new Grupo();
         try {
             grupo.setNome(dto.getNome());
