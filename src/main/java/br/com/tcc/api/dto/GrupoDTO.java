@@ -5,7 +5,6 @@ import java.util.List;
 public class GrupoDTO extends PrincipalDTO {
 
     private List<ListaGrupoDTO> lista;
-
     private ListaGrupoDTO grupoRetorno;
 
     public List<ListaGrupoDTO> getLista() {

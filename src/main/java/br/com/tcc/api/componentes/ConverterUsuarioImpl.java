@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import static br.com.tcc.api.utils.DataUtils.formataData;
+import static br.com.tcc.api.utils.DataUtils.formataDataHora;
 
 @Component
 public class ConverterUsuarioImpl implements ConverterUsuario{
@@ -20,7 +21,7 @@ public class ConverterUsuarioImpl implements ConverterUsuario{
         dto.setGrupo(converter.converteEntidadeDTO(usuario.getGrupo()));
         dto.setNome(usuario.getNome());
         dto.setSobrenome(usuario.getSobrenome());
-        dto.setDataCadastro(formataData(usuario.getDataCadastro()));
+        dto.setDataCadastro(formataDataHora(usuario.getDataCadastro()));
         dto.setId(usuario.getId());
         return dto;
     }

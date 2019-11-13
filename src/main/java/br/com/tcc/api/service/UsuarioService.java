@@ -1,17 +1,15 @@
 package br.com.tcc.api.service;
 
 import br.com.tcc.api.dto.ListaUsuarioDTO;
-import br.com.tcc.api.excecoes.UsuarioException;
-
-import java.util.List;
+import br.com.tcc.api.dto.UsuarioDTO;
 
 public interface UsuarioService {
 
-    List<ListaUsuarioDTO> buscarTodos();
+    UsuarioDTO buscarTodos();
 
-    ListaUsuarioDTO inserir (ListaUsuarioDTO usuario) throws UsuarioException;
+    UsuarioDTO inserir (ListaUsuarioDTO usuario) ;
 
-    ListaUsuarioDTO alterar (ListaUsuarioDTO usuario) throws UsuarioException;
+    UsuarioDTO alterar (ListaUsuarioDTO usuario) ;
 
     void deletar(ListaUsuarioDTO usuario);
 

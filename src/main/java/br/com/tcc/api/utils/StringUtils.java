@@ -5,15 +5,15 @@ public class StringUtils {
     private StringUtils() {
     }
 
+    public static String[] separarString(String string, String valorSeparar){
+        return string.split(valorSeparar);
+    }
+
     /**
      * Verifica se a string é nulo ou vazio ou seu tamanho = 0
      */
     public static Boolean isNuloVazio(String valor) {
-        Boolean retorno = false;
-        if (valor == null || valor.isEmpty() || valor.length() == 0) {
-            retorno = true;
-        }
-        return retorno;
+        return valor == null || valor.isEmpty();
     }
     /**
      * Verifica se a string não é nula ou vazio ou seu tamanho > 0

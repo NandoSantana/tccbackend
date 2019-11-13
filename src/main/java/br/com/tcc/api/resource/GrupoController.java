@@ -25,8 +25,17 @@ public class GrupoController {
     @PostMapping(value = "/listar")
     public ResponseEntity<?> listar(@Valid @RequestBody ListaGrupoDTO grupo) {
         try {
-            GrupoDTO resultado = service.buscarTodos(grupo);
-            return ResponseEntity.status(OK).body(resultado);
+            return ResponseEntity.status(OK).body(service.buscarTodos());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @PostMapping(value = "/listarPorNome")
+    public ResponseEntity<?> listarPorNome(@Valid @RequestBody ListaGrupoDTO grupo) {
+        try {
+            return ResponseEntity.status(OK).body(service.buscarPorNome(grupo));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(BAD_REQUEST).body(e.getMessage());
@@ -55,7 +64,7 @@ public class GrupoController {
         }
     }
 
-    @PostMapping(value = "/salvar")
+    @PostMapping(value = "/inserir")
     public ResponseEntity<?> inserir(@Valid @RequestBody ListaGrupoDTO grupo) {
         GrupoDTO grupoDto = service.inserir(grupo);
         return ResponseEntity.status(OK).body(grupoDto);

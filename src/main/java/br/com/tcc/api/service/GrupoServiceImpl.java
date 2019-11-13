@@ -25,9 +25,22 @@ public class GrupoServiceImpl extends ServicePrincipal implements GrupoService {
     @Autowired
     private ConverterGrupo converter;
 
-    public GrupoDTO buscarTodos(ListaGrupoDTO grupo) {
+    public GrupoDTO buscarTodos() {
         List<ListaGrupoDTO> grupoDTOS = new ArrayList<>();
         List<Grupo> grupos = repository.findAll();
+        for (Grupo grupoResultado: grupos){
+            grupoDTOS.add(converter.converteEntidadeDTO(grupoResultado));
+        }
+        GrupoDTO dto = new GrupoDTO();
+        dto.setLista(grupoDTOS);
+        dto.setTipoMensagem(mensagemRetornoBusca(grupoDTOS.size() > 0));
+        return dto;
+    }
+
+    @Override
+    public GrupoDTO buscarPorNome(ListaGrupoDTO grupo) {
+        List<ListaGrupoDTO> grupoDTOS = new ArrayList<>();
+        List<Grupo> grupos = repository.buscarGruposPorNome(converter.converteDTOEntidade(grupo));
         for (Grupo grupoResultado: grupos){
             grupoDTOS.add(converter.converteEntidadeDTO(grupoResultado));
         }

@@ -2,6 +2,8 @@ package br.com.tcc.api.service;
 
 import br.com.tcc.api.componentes.ConverterUsuario;
 import br.com.tcc.api.dto.ListaUsuarioDTO;
+import br.com.tcc.api.dto.MensagemDTO;
+import br.com.tcc.api.dto.UsuarioDTO;
 import br.com.tcc.api.excecoes.UsuarioException;
 import br.com.tcc.api.model.Usuario;
 import br.com.tcc.api.componentes.UsuarioRegra;
@@ -14,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UsuarioServiceImpl implements UsuarioService {
+public class UsuarioServiceImpl extends ServicePrincipal implements UsuarioService {
 
     @Autowired
     private UsuarioRepository repository;
@@ -23,21 +25,50 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Autowired
     private ConverterUsuario converter;
 
-    public List<ListaUsuarioDTO> buscarTodos(){
+    public UsuarioDTO buscarTodos(){
         List<ListaUsuarioDTO> usuarioDTOS = new ArrayList<>();
         List<Usuario> usuarios = repository.findAll();
         for(Usuario usuario: usuarios){
             usuarioDTOS.add(converter.converteEntidadeDTO(usuario));
         }
-        return usuarioDTOS;
+        UsuarioDTO dto = new UsuarioDTO();
+        dto.setLista(usuarioDTOS);
+        dto.setTipoMensagem(mensagemRetornoBusca(usuarioDTOS.size() > 0));
+        return dto;
     }
 
-    public ListaUsuarioDTO inserir (ListaUsuarioDTO usuario) throws UsuarioException {
-        return converter.converteEntidadeDTO(salvar(usuario));
+    public UsuarioDTO inserir (ListaUsuarioDTO usuario) {
+        UsuarioDTO dto = new UsuarioDTO();
+        try {
+            usuario = converter.converteEntidadeDTO(salvar(usuario));
+            dto.setTipoMensagem(mensagemSalvar());
+            dto.setUsuarioRetorno(usuario);
+        } catch (UsuarioException e) {
+            e.printStackTrace();
+            MensagemDTO mensagem = new MensagemDTO();
+            mensagem.setSumario("Error");
+            mensagem.setTipo("error");
+            mensagem.setMensagem(e.getMensagem());
+            dto.setTipoMensagem(mensagem);
+        }
+        return dto;
     }
 
-    public ListaUsuarioDTO alterar (ListaUsuarioDTO usuario) throws UsuarioException {
-        return converter.converteEntidadeDTO(salvar(usuario));
+    public UsuarioDTO alterar (ListaUsuarioDTO usuario)  {
+        UsuarioDTO dto = new UsuarioDTO();
+        try {
+            usuario = converter.converteEntidadeDTO(salvar(usuario));
+            dto.setTipoMensagem(mensagemSalvar());
+            dto.setUsuarioRetorno(usuario);
+        } catch (UsuarioException e) {
+            e.printStackTrace();
+            MensagemDTO mensagem = new MensagemDTO();
+            mensagem.setSumario("Error");
+            mensagem.setTipo("error");
+            mensagem.setMensagem(e.getMensagem());
+            dto.setTipoMensagem(mensagem);
+        }
+        return dto;
     }
 
     public void deletar(ListaUsuarioDTO dto){
