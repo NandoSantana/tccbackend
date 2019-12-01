@@ -5,7 +5,7 @@ public class StringUtils {
     private StringUtils() {
     }
 
-    public static String[] separarString(String string, String valorSeparar){
+    static String[] separarString(String string, String valorSeparar){
         return string.split(valorSeparar);
     }
 

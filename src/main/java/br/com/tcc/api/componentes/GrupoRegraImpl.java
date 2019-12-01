@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.List;
 
 import static br.com.tcc.api.utils.StringUtils.isNuloVazio;
 
@@ -42,7 +41,7 @@ public class GrupoRegraImpl implements GrupoRegra {
 
     private void antesInserir(Grupo grupo) throws GrupoException {
         Grupo grupoBuscar = repository.findByNome(grupo.getNome());
-        if(grupoBuscar == null){
+        if(grupoBuscar != null){
             throw new GrupoException(NOME_EXISTENTE_EM_NOSSA_BASE_DE_DADOS);
         }
     }

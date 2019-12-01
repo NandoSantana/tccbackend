@@ -3,14 +3,12 @@ package br.com.tcc.api.componentes;
 import br.com.tcc.api.dto.ListaGrupoDTO;
 import br.com.tcc.api.model.Grupo;
 import br.com.tcc.api.repository.GrupoRepository;
-import br.com.tcc.api.service.GrupoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.Optional;
 
-import static br.com.tcc.api.utils.DataUtils.formataData;
 import static br.com.tcc.api.utils.DataUtils.formataDataHora;
 
 @Component

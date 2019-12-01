@@ -39,10 +39,9 @@ public class DataUtils {
             return null;
         }
         Calendar calendario = new GregorianCalendar();
-        //String[] separarData = separarString(data, "T");
-        String[] separar = separarString(data, "/");
+        String[] separarData = separarString(data, "T");
+        String[] separar = separarString(separarData[0], "-");
         calendario.set( parseInt(separar[0]), parseInt(separar[1]) - 1, parseInt(separar[2]));
         return calendario.getTime();
     }
-
 }

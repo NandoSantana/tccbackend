@@ -2,15 +2,12 @@ package br.com.tcc.api.resource;
 
 import br.com.tcc.api.dto.GrupoDTO;
 import br.com.tcc.api.dto.ListaGrupoDTO;
-import br.com.tcc.api.excecoes.GrupoException;
 import br.com.tcc.api.service.GrupoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
-import java.util.List;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.OK;
