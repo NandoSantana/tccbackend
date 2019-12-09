@@ -19,6 +19,14 @@ public class GrupoController {
     @Autowired
     private GrupoService service;
 
+    @GetMapping(value = "/todos")
+    public ResponseEntity<?> todos() {
+        GrupoDTO grupoDto = service.buscarTodos();
+        return ResponseEntity.status(
+                grupoDto.getTipoMensagem().getTipo().equals("error") ? BAD_REQUEST :
+                        OK).body(grupoDto);
+    }
+
     @PostMapping(value = "/listar")
     public ResponseEntity<?> listar(@Valid @RequestBody ListaGrupoDTO grupo) {
         GrupoDTO grupoDto = service.buscarTodos();

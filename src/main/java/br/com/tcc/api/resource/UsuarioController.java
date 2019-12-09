@@ -19,6 +19,14 @@ public class UsuarioController {
     @Autowired
     private UsuarioService service;
 
+    @GetMapping(value = "/todos")
+    public ResponseEntity<?> todos() {
+        UsuarioDTO usuarioDdto = service.buscarTodos();
+        return ResponseEntity.status(
+                usuarioDdto.getTipoMensagem().getTipo().equals("error") ? BAD_REQUEST :
+                        OK).body(usuarioDdto);
+    }
+
     @PostMapping(value = "/listar")
     public ResponseEntity<?> listar(@Valid @RequestBody ListaUsuarioDTO usuario) {
         UsuarioDTO usuarioDdto = service.buscarTodos();

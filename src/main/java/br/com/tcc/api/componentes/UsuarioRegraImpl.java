@@ -19,7 +19,7 @@ public class UsuarioRegraImpl implements UsuarioRegra {
     private static final String NOME_E_SOBRENOME_EXISTENTE_EM_NOSSA_BASE_DE_DADOS = "Nome e sobrenome existente em nossa base de dados !";
     private static final String NOME_E_OBRIGATORIO = "Nome é obrigatório !";
     private static final String SOBRENOME_E_OBRIGATORIO = "Sobrenome é obrigatório !";
-    private static final String DEVE_ESCOLHER_UM_GRUUPO = "Deve escolher um gruupo !";
+    private static final String DEVE_ESCOLHER_UM_GRUUPO = "Deve escolher um grupo !";
     private static final String DEVE_ESCOLHER_UMA_DATA_DE_ANIVERSARIO = "Deve escolher uma data de aniversário !";
 
     @Autowired
@@ -33,7 +33,7 @@ public class UsuarioRegraImpl implements UsuarioRegra {
         if(isNuloVazio(usuario.getSobrenome())){
             throw new UsuarioException(SOBRENOME_E_OBRIGATORIO);
         }
-        if(usuario.getGrupo() == null){
+        if(usuario.getGrupo() == null || usuario.getGrupo().getId() == null){
             throw new UsuarioException(DEVE_ESCOLHER_UM_GRUUPO);
         }
         if(usuario.getDataAniversario() == null){
